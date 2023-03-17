@@ -40,7 +40,7 @@ class NanProtection(keras.callbacks.Callback):
 """
 StateResetter
 
-Reset all stateful layers in a model
+Reset all stateful layers in a model at the end of an epoch.
 """
 class StateResetter(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
@@ -51,7 +51,7 @@ class StateResetter(tf.keras.callbacks.Callback):
 """
 GetTrainLoss
 
-Saves loss for each batch for the previous epoch
+Saves loss for each batch for the previous epoch.
 """
 class GetTrainData(keras.callbacks.Callback):
     
