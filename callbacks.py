@@ -49,7 +49,7 @@ class StateResetter(tf.keras.callbacks.Callback):
                 layer.reset_states()
 
 """
-GetTrainLoss
+GetTrainData
 
 Saves loss for each batch for the previous epoch.
 """
