@@ -63,3 +63,21 @@ class GetTrainData(keras.callbacks.Callback):
     
     def on_train_batch_end(self, batch, logs=None):
         self.loss[batch] = logs['loss']
+
+"""
+StatefullyCallback
+
+Use this along with the Statefully layer
+
+NOT YET BUILT
+"""
+class StatefullyCallback(keras.callbacks.Callback):
+    
+    def __init__(self, layers):
+        self.layers = layers
+    
+    def on_train_batch_end(self, batch, logs=None):
+        pass
+        
+    def on_train_batch_begin(self, batch):
+        pass

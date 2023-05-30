@@ -48,3 +48,39 @@ class HoyerRegularizer:
     
     def get_config(self):
         return {'hoyer': self.hoyer}
+
+"""
+Wrap this around an RNN layer for it to act with statefullness -- carry state
+between inferences in the same epoch. The advantage over using stateful=True
+is that batch size can be varied. And, set on = True/False, and recompile the
+model to turn statefulness on and off.
+
+The provided layer must have return_state=True (but the Statefully layer will
+not return state unless its return_state=True)
+
+NOT FULLY BUILT, UNTESTED
+"""
+class Statefully(keras.layers.RNN):
+    
+    def __init__(self, layer, 
+                       return_sequences=False,
+                       return_state=False,
+                       go_backwards=False,
+                       stateful=False,
+                       unroll=False,
+                       time_major=False,
+                       **kwargs):
+        assert layer.return_state == True, "Passed layer must have return_state=True."
+        assert layer.stateful == False, "Undefined operations for stateful=True."
+        self.layer = layer
+        self.cell = layer.cell
+        super(Statefully, self).__init__(self.cell, 
+                                         return_sequences=False,
+                                         return_state=False,
+                                         go_backwards=False,
+                                         stateful=False,
+                                         unroll=False,
+                                         time_major=False,
+                                         **kwargs)
+        
+        

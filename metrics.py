@@ -38,3 +38,6 @@ def trac(sig, pred):
     num = np.square(np.dot(sig, pred))
     denom = np.dot(sig, sig) * np.dot(pred, pred)
     return num/denom
+""" mean absolute error """
+def mae(sig, pred):
+    return np.sum(np.abs(sig-pred))/sig.size
