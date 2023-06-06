@@ -91,7 +91,7 @@ class LaTeXTable():
         rtrn += '\\begin{tabular}{%s}\n'%self.make_vlines()
         
         for newline, row in zip(self.newlines, self.table):
-            rtrn += '\t\t\t' + ' & '.join(row) + newline + '\n'
+            rtrn += '\t\t\t' + ' & '.join(row) + newline
         
         rtrn += '\t\t\end{tabular}\n'
         rtrn += '\t\end{center}\n'
