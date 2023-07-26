@@ -66,17 +66,27 @@ class GetTrainData(keras.callbacks.Callback):
         self.loss[batch] = logs['loss']
 
 """
-StatefullyCallback
+StatefullyCallback.
 
-Use this along with the Statefully layer
+This callback replicates stateful=True for RNNs, but doesn't force a fixed 
+batch size. With layers=None, stateful(ly)ness applies to the entire model,
+or pass a list of layers that you want stateful(ly)ness to apply to.
 
 NOT YET BUILT
 """
-class StatefullyCallback(keras.callbacks.Callback):
+class Statefully(keras.callbacks.Callback):
     
-    def __init__(self, layers):
-        self.layers = layers
+    def __init__(self, layers=None):
+        super().__init__()
+        # if layers is passed one layer
+        if(isinstance(layers), list):
+            self.layers = layers
+        else:
+            self.layers = [layers]
     
+    def on_train_begin(self, logs=None):
+        # scan the model for layers 
+        
     def on_train_batch_end(self, batch, logs=None):
         pass
         
