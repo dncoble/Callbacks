@@ -102,9 +102,10 @@ weights at the end of training.
 """
 class RestoreBestWeights(keras.callbacks.Callback):
     
-    def __init__(self, mode="auto"):
+    def __init__(self, monitor="val_loss", mode="auto"):
         super().__init__()
         
+        self.monitor = monitor
         self.best_weights = None
         
         if mode == "min":
