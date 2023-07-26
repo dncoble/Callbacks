@@ -85,7 +85,9 @@ class Statefully(keras.callbacks.Callback):
             self.layers = [layers]
     
     def on_train_begin(self, logs=None):
-        # scan the model for layers 
+        # scan the model for layers
+        for layer in self.model.layers:
+            pass
         pass
         
     def on_train_batch_end(self, batch, logs=None):
