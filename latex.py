@@ -8,17 +8,10 @@ class LaTeXTable():
     '''
     table: list of lists for formatted string
     '''
-    def __init__(self, table):
+    def __init__(self, table=[]):
         self.table = table
         self.newlines = ['\\\ \n']*(len(table))
         self.vlines = [0]*(len(table[0]) + 1)
-        self.caption = None
-        self.label = None
-    
-    def __init__(self):
-        self.table = []
-        self.newlines = []
-        self.vlines = [0]
         self.caption = None
         self.label = None
     
