@@ -7,20 +7,29 @@ class LaTeXTable():
     
     '''
     table: list of lists for formatted string
+    roundto: if table is included and contains floats, digits after the zero
+    for rounding
     '''
-    def __init__(self, table=[]):
-        self.table = table
+    def __init__(self, table=[], roundto=4):
+        self.table = []
         self.newlines = ['\\\ \n']*(len(table))
         self.vlines = [0]*(len(table[0]) + 1)
         self.caption = None
         self.label = None
-    
-    def add_row(self, row, index = -1):
+        for row in table:
+            self.add_row(row, roundto=roundto)
+    '''
+    index: index where row is added or, if None, row is appended
+    '''
+    def add_row(self, row, index = None, roundto=4):
         row = list(row)
         for i in range(len(row)):
             if(type(row[i]) == float or type(row[i]) == np.float64):
-                row[i] = str(round(row[i], 5))
-        self.table.insert(index, row)
+                row[i] = str(round(row[i], roundto))
+        if(not index is None):
+            self.table.insert(index, row)
+        else:
+            self.table.append(index, row)
         self.newlines.insert(index, '\\\ \n')
     
     def add_col(self, col, index = 0):
@@ -37,6 +46,12 @@ class LaTeXTable():
                     c = str(round(c, 5))
                 r.insert(index, c)
         self.vlines.insert(index, 0)
+    
+    def add_caption(self, caption):
+        self.caption = caption
+    
+    def add_label(self, label):
+        self.label = label
     
     '''
     index: index of the row the hline will be under. None for all rows
