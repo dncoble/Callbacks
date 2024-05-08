@@ -50,6 +50,21 @@ class HoyerRegularizer:
         return {'hoyer': self.hoyer}
 
 """
+Regularizer to be used to control an informed and additive model.
+"""
+class PowerRatioRegularizer:
+    def __init__(self, coef=0.1):
+        coef = 0 if coef is None else coef
+        self.coef = backend.cast_to_floatx(coef)
+    
+    # x is tuple of (informed, additive)
+    def __call__(self, x):
+        return self.coef*tf.reduce_sum(tf.square(x[0]))/tf.reduce_sum(tf.square(x[1]))
+    
+    def get_config(self):
+        return {'coef': self.coef}
+
+"""
 With further thought I don't think this is the best way to do it. See the 
 Statefully callback.
 
