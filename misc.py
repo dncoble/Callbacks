@@ -64,6 +64,29 @@ class PowerRatioRegularizer:
     def get_config(self):
         return {'coef': self.coef}
 
+class WeightSum(keras.layers.Layer):
+    '''
+    pass weights
+    '''
+    def __init__(self, *args,
+                 trainable=True,
+                 name=None,
+                 dtype=None,
+                 dynamic=False,
+                 **kwargs):
+        self.args = args
+        super().__init__(trainable=True,
+                       name=None,
+                       dtype=None,
+                       dynamic=False,
+                       **kwargs)
+    
+    def call(self, inputs):
+        rtrn = inputs[0]*self.args[0]
+        for arg, inp in zip(self.args[1:], inputs[1:]):
+            rtrn += tf.reduce_mean(inp)*arg
+        return rtrn
+
 """
 With further thought I don't think this is the best way to do it. See the 
 Statefully callback.

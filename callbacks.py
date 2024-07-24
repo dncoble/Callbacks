@@ -157,3 +157,30 @@ class RestoreBestWeights(keras.callbacks.Callback):
         
     def on_train_end(self, logs=None):
         self.model.set_weights(self.best_weights)
+
+'''
+Saves any values from logs which it is instructed to.
+'''
+class SaveBatchValues(keras.callbacks.Callback):
+    
+    def __init__(self, *value_names, n_batches=None):
+        super().__init__()
+        
+        self.save = {}
+        self.n_batches = n_batches
+        for name in value_names:
+            if(self.n_batches is None):
+                self.save[name] = []
+            else:
+                self.save[name] = [None]*n_batches
+    
+    def on_train_batch_end(self, batch, logs=None):
+        for key, value in logs.items():
+            if(key in self.save.keys()):
+                if(self.n_batches is None):
+                    self.save[key].append(value)
+                else:
+                    self.save[key][batch] = value
+            
+    def __getitem__(self, key):
+        return self.save[key]
